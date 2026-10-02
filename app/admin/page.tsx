@@ -29,7 +29,7 @@ export default function Admin(){
  }
  if(!ready)return <main className="loading">Checking admin login...</main>
  return <main>
-   <nav className="nav wrap"><a className="brand" href="/"><span>JEBBY</span> CARZ ADMIN</a><div className="links"><a href="/gallery">View Gallery</a><button className="linkButton" onClick={async()=>{await supabase.auth.signOut();router.replace('/login')}}>Sign Out</button></div></nav>
+   <nav className="nav wrap"><a className="brand brandLogo" href="/"><img src="/Neon%20Blue%20Supercar%20Brand%20Logo.png" alt="Jebby Carz PTE LTD"/></a><div className="links"><a href="/gallery">View Gallery</a><button className="linkButton" onClick={async()=>{await supabase.auth.signOut();router.replace('/login')}}>Sign Out</button></div></nav>
    <section className="section wrap"><p className="eyebrow">JOB GALLERY</p><h1 className="sectionTitle">Upload completed work</h1>
    <form className="adminForm" onSubmit={publish}>
      <label>Job title<input name="title" required placeholder="Headlamp restoration"/></label>
