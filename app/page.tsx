@@ -1,4 +1,11 @@
-const whatsapp = 'https://wa.me/6597974631'
+const whatsappMessage = encodeURIComponent(`Hi Jebby Carz, I would like to enquire about my headlamp.
+
+Vehicle make/model:
+Headlamp problem:
+Service I am interested in:
+
+I can send photos of the headlamp here.`)
+const whatsapp = `https://wa.me/6597974631?text=${whatsappMessage}`
 const maps = 'https://maps.app.goo.gl/M3yGAjoRvhxwWZm77'
 
 const services = [
