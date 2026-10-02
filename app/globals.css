@@ -4,7 +4,7 @@
 
 .brandLogo{display:flex;align-items:center;height:70px}.brandLogo img{display:block;width:145px;height:58px;object-fit:contain;border-radius:4px}.logoCard{padding:24px;display:flex;align-items:center;justify-content:center;min-height:390px}.heroLogo{display:block;width:100%;max-width:430px;height:auto;object-fit:contain;border-radius:12px}@media(max-width:760px){.brandLogo img{width:112px;height:52px}.heroCard.logoCard{display:flex;min-height:auto;margin-top:25px}.heroLogo{max-width:330px}}
 
-/* Crop the square source artwork so the actual top logo fills the header instead of appearing tiny. */
-.brandLogo{width:220px;height:72px;overflow:hidden;border-radius:4px}
-.brandLogo img{width:220px;height:72px;object-fit:cover;object-position:center center;transform:scale(1.55)}
-@media(max-width:760px){.brandLogo{width:155px;height:60px}.brandLogo img{width:155px;height:60px;object-fit:cover;transform:scale(1.55)}}
+/* Wide transparent header logo: show the complete artwork without cropping. */
+.brandLogo{width:220px;height:72px;overflow:visible;border-radius:0}
+.brandLogo img{display:block;width:220px;height:72px;object-fit:contain;object-position:left center;transform:none;border-radius:0}
+@media(max-width:760px){.brandLogo{width:155px;height:60px}.brandLogo img{width:155px;height:60px;object-fit:contain;transform:none}}
