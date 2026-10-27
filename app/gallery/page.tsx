@@ -12,8 +12,8 @@ export default function Gallery() {
   }, [])
   const url=(p:string)=>supabase.storage.from('job-photos').getPublicUrl(p).data.publicUrl
   return <main>
-    <nav className="nav wrap"><a className="brand brandLogo" href="/"><img src="/Neon%20Blue%20Supercar%20Brand%20Logo.png" alt="Jebby Carz PTE LTD"/></a><div className="links"><a href="/">Home</a><a className="pill" href="https://wa.me/6597974631">WhatsApp</a></div></nav>
-    <section className="section wrap"><p className="eyebrow">OUR WORK</p><h1 className="sectionTitle">Before &amp; After Gallery</h1><p className="lead">Real headlamp jobs completed by Jebby Carz.</p>
+    <nav className="nav wrap galleryNav"><a className="brand brandLogo" href="/"><img src="/Neon%20Blue%20Supercar%20Brand%20Logo.png" alt="Jebby Carz PTE LTD"/></a><div className="links"><a href="/">Home</a><a className="pill" href="https://wa.me/6597974631">WhatsApp</a></div></nav>
+    <section className="section wrap galleryPage"><p className="eyebrow">OUR WORK</p><h1 className="sectionTitle">Before &amp; After Gallery</h1><p className="lead">Real headlamp jobs completed by Jebby Carz.</p>
       {jobs.length===0 ? <div className="empty">Our completed job photos will appear here soon.</div> :
       <div className="gallery">{jobs.map(j=><article className="job" key={j.id}>
         <div className="compare"><figure><img src={url(j.before_path)} alt={j.title+' before'}/><figcaption>BEFORE</figcaption></figure><figure><img src={url(j.after_path)} alt={j.title+' after'}/><figcaption>AFTER</figcaption></figure></div>
