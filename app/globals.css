@@ -33,3 +33,26 @@
  .nav .links a{font-size:11px}
  .hero h1{font-size:36px}
 }
+
+/* Compact mobile header: logo and WhatsApp on top, navigation below. */
+@media(max-width:760px){
+ .nav{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;column-gap:12px;row-gap:4px;padding-top:5px;padding-bottom:8px}
+ .nav .brandLogo{grid-column:1;grid-row:1;width:150px;height:54px}
+ .nav .brandLogo img{width:150px;height:54px}
+ .nav .links{display:contents}
+ .nav .links .pill{grid-column:2;grid-row:1;justify-self:end;padding:8px 12px;font-size:12px}
+ .nav .links>a:not(.pill){display:inline-block}
+ .nav .links>a:not(.pill){grid-row:2;font-size:12px}
+ .nav{grid-template-columns:repeat(4,minmax(0,1fr))}
+ .nav .brandLogo{grid-column:1/4}
+ .nav .links .pill{grid-column:4}
+ .nav .links>a:nth-child(1){grid-column:1}
+ .nav .links>a:nth-child(2){grid-column:2}
+ .nav .links>a:nth-child(3){grid-column:3}
+ .nav .links>a:nth-child(4){grid-column:4}
+ .nav .links>a:not(.pill){text-align:center;white-space:normal;line-height:1.25;padding:6px 1px}
+}
+@media(max-width:380px){
+ .nav .brandLogo,.nav .brandLogo img{width:135px;height:50px}
+ .nav .links>a:not(.pill){font-size:11px}
+}
