@@ -8,3 +8,28 @@
 .brandLogo{width:220px;height:72px;overflow:visible;border-radius:0}
 .brandLogo img{display:block;width:220px;height:72px;object-fit:contain;object-position:left center;transform:none;border-radius:0}
 @media(max-width:760px){.brandLogo{width:155px;height:60px}.brandLogo img{width:155px;height:60px;object-fit:contain;transform:none}}
+/* Keep the phone layout visually consistent with desktop while remaining readable. */
+@media (max-width:760px){
+ .nav{height:auto;min-height:84px;flex-wrap:wrap;gap:0;padding-top:8px;padding-bottom:12px}
+ .nav .brandLogo{width:170px;height:62px}
+ .nav .brandLogo img{width:170px;height:62px}
+ .nav .links{width:100%;display:flex;flex-wrap:wrap;gap:8px 16px;justify-content:center;padding-top:8px}
+ .nav .links>a:not(.pill){display:inline-block}
+ .nav .links a{font-size:12px;white-space:nowrap}
+ .nav .links .pill{padding:7px 12px}
+ .hero{padding:42px 0 54px}
+ .heroGrid{gap:22px}
+ .hero h1{font-size:clamp(37px,9vw,56px);line-height:1.04;letter-spacing:-1.8px;margin:14px 0 18px}
+ .hero .lead{font-size:16px;line-height:1.6}
+ .hero .actions{margin-top:22px}
+ .hero .button{padding:12px 15px;font-size:14px}
+ .heroCard.logoCard{margin-top:4px;min-height:240px;padding:20px}
+ .heroLogo{max-width:280px}
+ .section{padding:54px 0}
+ .sectionTitle{font-size:32px}
+}
+@media (max-width:380px){
+ .nav .links{gap:8px 10px}
+ .nav .links a{font-size:11px}
+ .hero h1{font-size:36px}
+}
