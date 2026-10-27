@@ -56,3 +56,27 @@
  .nav .brandLogo,.nav .brandLogo img{width:135px;height:50px}
  .nav .links>a:not(.pill){font-size:11px}
 }
+
+/* Gallery-specific mobile layout: prevent header overlap and keep comparisons side by side. */
+@media(max-width:760px){
+ .galleryNav{display:flex;flex-wrap:nowrap;align-items:center;justify-content:space-between;gap:12px;min-height:76px;padding:8px 0}
+ .galleryNav .brandLogo{flex:0 1 170px;min-width:0;width:170px;height:56px;grid-column:auto;grid-row:auto}
+ .galleryNav .brandLogo img{width:100%;height:56px;object-fit:contain;object-position:left center}
+ .galleryNav .links{display:flex;flex:0 0 auto;width:auto;padding:0;gap:10px;align-items:center}
+ .galleryNav .links>a:not(.pill){display:inline-block;font-size:12px;padding:0;white-space:nowrap}
+ .galleryNav .links .pill{font-size:12px;padding:8px 11px;white-space:nowrap}
+ .galleryPage{padding-top:45px}
+ .galleryPage .sectionTitle{font-size:clamp(30px,7.5vw,38px);line-height:1.1;letter-spacing:-1px;margin-bottom:20px}
+ .galleryPage .lead{font-size:16px;line-height:1.55}
+ .galleryPage .gallery{gap:20px}
+ .galleryPage .compare{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:2px}
+ .galleryPage .compare figure{min-width:0;min-height:0;aspect-ratio:4/5;overflow:hidden}
+ .galleryPage .compare img{width:100%;height:100%;max-height:none;object-fit:cover}
+ .galleryPage .compare figcaption{font-size:10px;bottom:8px;left:8px;padding:6px 8px}
+ .galleryPage .jobBody{padding:18px}
+}
+@media(max-width:380px){
+ .galleryNav .brandLogo{flex-basis:125px}
+ .galleryNav .links{gap:6px}
+ .galleryNav .links .pill{padding:7px 9px}
+}
