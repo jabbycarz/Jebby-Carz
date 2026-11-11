@@ -10,7 +10,8 @@ export default function Gallery() {
   const [error,setError] = useState('')
   const supabase = createClient()
   useEffect(() => {
-    supabase.from('jobs').select('*').order('created_at',{ascending:false}).then(({data,error}) => {if(error)setError('Gallery temporarily unavailable. Please try again shortly. Your photos have not necessarily been deleted.');else setJobs((data || []) as Job[]);setLoading(false)}).catch(()=>{setError('Cannot connect to the gallery right now. Please refresh later.');setLoading(false)})
+    async function loadJobs(){try{const {data,error}=await supabase.from('jobs').select('*').order('created_at',{ascending:false});if(error)throw error;setJobs((data||[]) as Job[])}catch{setError('Gallery temporarily unavailable. Please try again shortly. Your photos have not necessarily been deleted.')}finally{setLoading(false)}}
+    void loadJobs()
   }, [])
   const url=(p:string)=>supabase.storage.from('job-photos').getPublicUrl(p).data.publicUrl
   return <main>
