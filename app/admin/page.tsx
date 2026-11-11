@@ -7,12 +7,12 @@ type Job={id:string;title:string;vehicle:string;service:string;before_path:strin
 
 export default function Admin(){
  const supabase=createClient(),router=useRouter()
- const [ready,setReady]=useState(false),[jobs,setJobs]=useState<Job[]>([]),[message,setMessage]=useState('')
- async function load(){const {data}=await supabase.from('jobs').select('*').order('created_at',{ascending:false});setJobs((data||[]) as Job[])}
+ const [ready,setReady]=useState(false),[jobs,setJobs]=useState<Job[]>([]),[message,setMessage]=useState(''),[busy,setBusy]=useState(false)
+ async function load(){try{const {data,error}=await supabase.from('jobs').select('*').order('created_at',{ascending:false});if(error)throw error;setJobs((data||[]) as Job[])}catch{setMessage('Cannot load jobs right now. Please try again when the database is available.')}}
  useEffect(()=>{supabase.auth.getUser().then(({data})=>{if(!data.user)router.replace('/login');else{setReady(true);load()}})},[])
  async function upload(file:File,side:string){const safe=file.name.replace(/[^a-zA-Z0-9._-]/g,'-');const path=`${crypto.randomUUID()}-${side}-${safe}`;const {error}=await supabase.storage.from('job-photos').upload(path,file);if(error)throw error;return path}
  async function publish(e:FormEvent<HTMLFormElement>){
-   e.preventDefault();setMessage('Uploading photos...')
+   e.preventDefault();if(busy)return;setBusy(true);setMessage('Uploading photos...')
    const form=e.currentTarget,data=new FormData(form)
    try{
      const before=await upload(data.get('before') as File,'before')
@@ -20,7 +20,7 @@ export default function Admin(){
      const {error}=await supabase.from('jobs').insert({title:data.get('title'),vehicle:data.get('vehicle'),service:data.get('service'),description:data.get('description'),before_path:before,after_path:after})
      if(error)throw error
      form.reset();setMessage('Job published successfully.');load()
-   }catch(error){setMessage(error instanceof Error?error.message:'Upload failed.')}
+   }catch(error){const detail=error instanceof Error?error.message:'Unknown error';setMessage(detail.toLowerCase().includes('fetch')?'Cannot reach photo storage. Check your connection and try again later. Your form has not been cleared.':`Upload failed: ${detail}`)}finally{setBusy(false)}
  }
  async function remove(j:Job){
    if(!confirm('Delete this job and its photos?'))return
@@ -38,8 +38,9 @@ export default function Admin(){
      <label className="wide">Description<textarea name="description" rows={3} placeholder="Optional job details"/></label>
      <label>Before photo<input name="before" type="file" accept="image/jpeg,image/png,image/webp" required/></label>
      <label>After photo<input name="after" type="file" accept="image/jpeg,image/png,image/webp" required/></label>
-     <button className="button primary wide" type="submit">Upload &amp; Publish</button>
+     <button className="button primary wide" type="submit" disabled={busy}>{busy?"Uploading...":"Upload & Publish"}</button>
    </form>{message&&<p className="status">{message}</p>}
+   <p>For safety, keep copies of your original photos on your phone or another storage service. The CSV backup below contains job details and photo links, not the actual image files.</p><button type="button" className="button" onClick={()=>{const rows=[["Title","Vehicle","Service","Before photo URL","After photo URL"],...jobs.map(j=>[j.title,j.vehicle,j.service,supabase.storage.from("job-photos").getPublicUrl(j.before_path).data.publicUrl,supabase.storage.from("job-photos").getPublicUrl(j.after_path).data.publicUrl])];const csv=rows.map(row=>row.map(value=>`"${String(value).replace(/"/g,'""')}"`).join(",")).join("\r\n");const blob=new Blob([csv],{type:"text/csv;charset=utf-8"});const link=document.createElement("a");link.href=URL.createObjectURL(blob);link.download="jebby-carz-job-backup.csv";link.click();URL.revokeObjectURL(link.href)}}>Download job list backup (CSV)</button>
    <div className="adminJobs">{jobs.map(j=><div key={j.id}><span><b>{j.title}</b><small>{j.vehicle} · {j.service}</small></span><button onClick={()=>remove(j)}>Delete</button></div>)}</div>
    </section>
  </main>
